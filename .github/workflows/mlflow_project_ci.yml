@@ -3,10 +3,10 @@ name: CI/CD MLflow Heart Disease
 on:
   push:
     branches:
-      - main
+      - workflow-ci
   pull_request:
     branches:
-      - main
+      - workflow-ci
   workflow_dispatch:
 
 env:
@@ -33,7 +33,7 @@ jobs:
 
       - name: Run MLflow Project
         run: |
-          mlflow run MLProject -P train_data=${{ env.TRAIN_PATH }} -P test_data=${{ env.TEST_PATH }}
+          mlflow run ./MLProject -P train_data=${{ env.TRAIN_PATH }} -P test_data=${{ env.TEST_PATH }}
 
       - name: Get latest MLflow run_id
         run: |
