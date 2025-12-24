@@ -99,6 +99,6 @@ def preprocess_pipeline(csv_path, out_dir, target_candidates=None):
 
 if __name__ == "__main__":
     # Example usage
-    csv_path = os.path.join("dataset_raw", "Heart_Disease_Prediction.csv")
+    csv_path = os.path.join("heartdisease_raw", "Heart_Disease_Prediction.csv")
     out_dir = os.path.join("preprocessing", "heart_disease_preprocessed")
     preprocess_pipeline(csv_path, out_dir)
