@@ -28,13 +28,23 @@ def main(train_data, test_data):
         print(f"Test Accuracy: {acc:.4f}")
         print(classification_report(y_test, y_pred))
 
+        print("Logging model...")
         mlflow.sklearn.log_model(model, "model", input_example=X_test[:2], signature=mlflow.models.infer_signature(X_test, y_pred))
-        # Print run_id and artifact path for debugging
+        print("Model logged.")
         print("MLflow run_id:", run.info.run_id)
         artifact_uri = mlflow.get_artifact_uri("model")
         print(f"Model artifact saved at: {artifact_uri}")
-        artifact_uri = mlflow.get_artifact_uri("model")
-        print(f"Model artifact saved at: {artifact_uri}")
+        # List isi artifacts untuk debug
+        artifacts_dir = os.path.join("mlruns", "0", run.info.run_id, "artifacts")
+        if os.path.exists(artifacts_dir):
+            print("Artifacts dir:", os.listdir(artifacts_dir))
+            model_dir = os.path.join(artifacts_dir, "model")
+            if os.path.exists(model_dir):
+                print("Model dir exists:", os.listdir(model_dir))
+            else:
+                print("Model dir does NOT exist in artifacts!")
+        else:
+            print("Artifacts dir does NOT exist!")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
