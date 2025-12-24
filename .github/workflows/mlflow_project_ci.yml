@@ -33,7 +33,7 @@ jobs:
 
       - name: Run MLflow Project
         run: |
-          cd workflow-CI && mlflow run MLProject -P train_data=MLProject/heart_disease_preprocessed/train_data.csv -P test_data=MLProject/heart_disease_preprocessed/test_data.csv
+          cd workflow-CI && mlflow run MLProject --env-manager=local -P train_data=MLProject/heart_disease_preprocessed/train_data.csv -P test_data=MLProject/heart_disease_preprocessed/test_data.csv
 
       - name: Get latest MLflow run_id
         run: |
