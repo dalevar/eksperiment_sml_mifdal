@@ -24,10 +24,10 @@ jobs:
           pip install kaggle pandas numpy scikit-learn
 
       - name: List dataset_raw contents
-        run: ls -l dataset_raw
+        run: ls -l heartdisease_raw
 
       - name: Run preprocessing script
-        run: python automate_mifdal.py --csv_path dataset_raw/Heart_Disease_Prediction.csv --out_dir preprocessing/heart_disease_preprocessed/
+        run: python automate_mifdal.py --csv_path heartdisease_raw/Heart_Disease_Prediction.csv --out_dir preprocessing/heart_disease_preprocessed/
 
       - name: Upload processed dataset
         uses: actions/upload-artifact@v4
