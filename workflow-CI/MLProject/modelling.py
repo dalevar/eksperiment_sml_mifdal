@@ -17,19 +17,24 @@ def main(train_data, test_data):
     y_train = train_df[target_col]
     X_test = test_df.drop(columns=[target_col])
     y_test = test_df[target_col]
-    mlflow.sklearn.autolog()
-    
-    with mlflow.start_run(run_name="LogisticRegression_CI"):
+    # mlflow.sklearn.autolog()  # Disabled to avoid autolog overriding manual log_model
+
+    with mlflow.start_run(run_name="LogisticRegression_CI") as run:
         model = LogisticRegression(max_iter=1000, random_state=42)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         acc = accuracy_score(y_test, y_pred)
-        
+
         print(f"Test Accuracy: {acc:.4f}")
         print(classification_report(y_test, y_pred))
-        
-        mlflow.sklearn.log_model(model, "model", input_example=X_test[:2], signature=mlflow.models.infer_signature(X_test, y_pred))
 
+        mlflow.sklearn.log_model(model, "model", input_example=X_test[:2], signature=mlflow.models.infer_signature(X_test, y_pred))
+        # Print run_id and artifact path for debugging
+        print("MLflow run_id:", run.info.run_id)
+        artifact_uri = mlflow.get_artifact_uri("model")
+        print(f"Model artifact saved at: {artifact_uri}")
+        artifact_uri = mlflow.get_artifact_uri("model")
+        print(f"Model artifact saved at: {artifact_uri}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
