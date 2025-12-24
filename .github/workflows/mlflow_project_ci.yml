@@ -38,7 +38,11 @@ jobs:
       - name: Get latest MLflow run_id
         run: |
           cd workflow-CI
-          RUN_ID=$(find mlruns/0 -maxdepth 1 -mindepth 1 -type d -exec test -d '{}/artifacts/model' \; -print | sort -r | head -n 1 | xargs -n1 basename)
+          RUN_ID=$(find mlruns/0 -maxdepth 1 -mindepth 1 -type d -exec test -d '{}/artifacts/model' \; -print | sort -r | head -n 1 | xargs -r -n1 basename)
+          if [ -z "$RUN_ID" ]; then
+            echo "No valid MLflow run with model artifact found!"
+            exit 1
+          fi
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run_id: $RUN_ID"
 
