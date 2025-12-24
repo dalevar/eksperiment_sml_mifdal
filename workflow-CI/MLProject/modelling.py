@@ -6,8 +6,6 @@ import numpy as np
 import mlflow
 import mlflow.sklearn
 
-# ...setelah model selesai dilatih...
-mlflow.sklearn.log_model(model, "model")
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 
@@ -27,6 +25,9 @@ def main(train_data, test_data):
         acc = accuracy_score(y_test, y_pred)
         print(f"Test Accuracy: {acc:.4f}")
         print(classification_report(y_test, y_pred))
+
+# ...setelah model selesai dilatih...
+mlflow.sklearn.log_model(model, "model")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
