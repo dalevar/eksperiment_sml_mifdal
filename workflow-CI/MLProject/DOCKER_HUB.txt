@@ -1,2 +1,2 @@
 # Tautan Docker Hub untuk artefak model
-https://hub.docker.com/r/dalevar/eksperiment_sml_mifdal
+https://hub.docker.com/repository/docker/dalevar/heart-disease-ml/general
