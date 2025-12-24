@@ -27,7 +27,7 @@ jobs:
         run: ls -l heartdisease_raw
 
       - name: Run preprocessing script
-        run: python automate_mifdal.py --csv_path heartdisease_raw/Heart_Disease_Prediction.csv --out_dir preprocessing/heart_disease_preprocessed/
+        run: python preprocessing/automate_mifdal.py --csv_path heartdisease_raw/Heart_Disease_Prediction.csv --out_dir preprocessing/heart_disease_preprocessed/
 
       - name: Upload processed dataset
         uses: actions/upload-artifact@v4
