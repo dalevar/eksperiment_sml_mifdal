@@ -1,8 +1,13 @@
 import argparse
 import os
+from xml.parsers.expat import model
 import pandas as pd
 import numpy as np
 import mlflow
+import mlflow.sklearn
+
+# ...setelah model selesai dilatih...
+mlflow.sklearn.log_model(model, "model")
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 
