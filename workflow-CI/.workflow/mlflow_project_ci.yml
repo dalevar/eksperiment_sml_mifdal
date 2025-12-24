@@ -1,0 +1,38 @@
+name: MLflow Project CI
+
+on:
+  push:
+    paths:
+      - "MLProject/**"
+      - ".workflow/**"
+  workflow_dispatch:
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mlflow pandas numpy scikit-learn
+      - name: Run MLflow Project
+        run: |
+          mlflow run MLProject -P csv_path=MLProject/heart_disease_preprocessed/heart_disease_preprocessed.csv
+      - name: Build Docker image
+        run: |
+          mlflow models build-docker -m MLProject/model -n dalevar/eksperiment_sml_mifdal:latest
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u dalevar --password-stdin
+      - name: Push Docker image
+        run: docker push dalevar/eksperiment_sml_mifdal:latest
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained_model
+          path: MLProject/model/

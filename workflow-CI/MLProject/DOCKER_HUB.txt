@@ -1,0 +1,11 @@
+# Tautan Docker Hub untuk artefak model
+https://hub.docker.com/r/dalevar/eksperiment_sml_mifdal
+
+Cara push image:
+1. Build docker image dengan MLflow:
+   mlflow models build-docker -m <model_path> -n dalevar/eksperiment_sml_mifdal:latest
+2. Login ke Docker Hub:
+   docker login -u dalevar
+   (masukkan personal access token saat diminta)
+3. Push image:
+   docker push dalevar/eksperiment_sml_mifdal:latest

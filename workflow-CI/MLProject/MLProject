@@ -1,0 +1,11 @@
+name: heart-disease-mlflow
+conda_env: conda.yaml
+entry_points:
+  main:
+    parameters:
+      train_data:
+        { type: str, default: "heart_disease_preprocessed/train_data.csv" }
+      test_data:
+        { type: str, default: "heart_disease_preprocessed/test_data.csv" }
+    command: >
+      python modelling.py --train_data {train_data} --test_data {test_data}
