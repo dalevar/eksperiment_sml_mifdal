@@ -35,6 +35,19 @@ jobs:
         run: |
           cd workflow-CI && mlflow run MLProject --env-manager=local -P train_data=heart_disease_preprocessed/train_data.csv -P test_data=heart_disease_preprocessed/test_data.csv
 
+      - name: Debug list mlruns
+        run: |
+          cd workflow-CI
+          echo "==== List mlruns/0 ===="
+          ls -l mlruns/0 || echo "mlruns/0 not found"
+          echo "==== List mlruns/0/*/artifacts ===="
+          for d in mlruns/0/*; do
+            if [ -d "$d/artifacts" ]; then
+              echo "$d/artifacts:"
+              ls -l "$d/artifacts"
+            fi
+          done
+
       - name: Get latest MLflow run_id
         run: |
           cd workflow-CI
