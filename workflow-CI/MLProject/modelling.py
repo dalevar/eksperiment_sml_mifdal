@@ -19,7 +19,6 @@ def main(train_data, test_data):
     y_test = test_df[target_col]
     # mlflow.sklearn.autolog()  # Disabled to avoid autolog overriding manual log_model
     # Force MLflow tracking URI to local mlruns folder (relative to project root)
-    mlflow.set_tracking_uri("file:./mlruns")
 
     with mlflow.start_run(run_name="LogisticRegression_CI") as run:
         model = LogisticRegression(max_iter=1000, random_state=42)
