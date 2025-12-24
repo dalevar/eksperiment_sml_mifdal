@@ -22,9 +22,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
           pip install kaggle pandas numpy scikit-learn
-      - name: Run preprocessing automation
-        run: |
-          python preprocessing/automate_mifdal.py
+
+      - name: List dataset_raw contents
+        run: ls -l dataset_raw
+
+      - name: Run preprocessing script
+        run: python automate_mifdal.py --csv_path dataset_raw/Heart_Disease_Prediction.csv --out_dir preprocessing/heart_disease_preprocessed/
+
       - name: Upload processed dataset
         uses: actions/upload-artifact@v4
         with:
