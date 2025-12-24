@@ -18,16 +18,18 @@ def main(train_data, test_data):
     X_test = test_df.drop(columns=[target_col])
     y_test = test_df[target_col]
     mlflow.sklearn.autolog()
+    
     with mlflow.start_run(run_name="LogisticRegression_CI"):
         model = LogisticRegression(max_iter=1000, random_state=42)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         acc = accuracy_score(y_test, y_pred)
+        
         print(f"Test Accuracy: {acc:.4f}")
         print(classification_report(y_test, y_pred))
+        
+        mlflow.sklearn.log_model(model, "model", input_example=X_test[:2], signature=mlflow.models.infer_signature(X_test, y_pred))
 
-# ...setelah model selesai dilatih...
-mlflow.sklearn.log_model(model, "model")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
